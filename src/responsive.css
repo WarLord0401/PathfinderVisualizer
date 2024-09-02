@@ -1,0 +1,81 @@
+/* General reset for mobile */
+* {
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  /* Tablet and mobile */
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .grid-wrapper {
+    margin: 0;
+    padding: 10px;
+    width: 100%;
+    order: 1; /* Ensure the grid is positioned above the functionality buttons */
+  }
+
+  .grid-container {
+    width: 100%;
+    padding: 10px;
+    box-shadow: none;
+  }
+
+  .right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    order: 2; /* Place functionality buttons below the grid */
+  }
+
+  .controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .pathfinding-methods {
+    width: 100%;
+    margin-top: 10px;
+    order: 3; /* Ensure pathfinding methods are below the functionality buttons */
+  }
+
+  .pathfinding-methods button {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+
+  .control-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 0.9em;
+  }
+
+  .footer {
+    position: relative;
+    padding: 10px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Mobile */
+  .control-btn {
+    padding: 12px;
+    font-size: 0.8em;
+  }
+
+  .pathfinding-methods button {
+    font-size: 0.8em;
+  }
+}
