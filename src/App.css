@@ -9,19 +9,16 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin: 0;
   font-family: Arial, sans-serif;
   background-color: var(--primary-bg);
   color: var(--primary-text);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-  height: 80%;
 }
 
 /* Header styling */
 .title {
   background-color: var(--header-bg);
   color: var(--header-text);
-  height: 10%;
   padding: 20px;
   text-align: center;
   font-size: 1.8em;
@@ -159,4 +156,3 @@ body {
   color: var(--method-btn-hover-text);
   transform: scale(1.05); /* Slight scale effect on hover */
 }
-

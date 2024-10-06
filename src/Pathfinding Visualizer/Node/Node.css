@@ -1,9 +1,8 @@
-/* Base node styling */
 .node {
   width: 25px;
   height: 25px;
   outline: 1px solid var(--primary-text);
-  display: inline-block;
+  display: grid;
   position: relative;
 }
 

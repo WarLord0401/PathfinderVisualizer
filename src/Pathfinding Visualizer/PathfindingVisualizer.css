@@ -1,11 +1,3 @@
-.grid {
-  margin-left: 2vw;
-  display: flex;
-  flex-wrap: wrap; /* Allows the grid to wrap onto new lines */
-  width: 100%; /* Ensures the grid takes up the full width of the container */
-}
-
 .grid-row {
-  display: flex;
-  flex-basis: 100%; /* Ensures each row takes the full width of the container */
+  display: contents;
 }
