@@ -11,17 +11,24 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  height: 80%;
 }
 
 /* Header styling */
 .title {
-  background-color: #4a4e69;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  height: 10%;
   padding: 20px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.8em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+  display: flex;
+  justify-content: space-between; /* Space between title and icon */
+  align-items: center; /* Center items vertically */
 }
 
 /* Main container styling */
@@ -34,23 +41,6 @@ body {
   flex: 1;
 }
 
-/* Grid wrapper styling */
-.grid-wrapper {
-  background-color: #f0f0f0; /* Light gray background for the area beyond the grid */
-  padding: 20px; /* Space between the grid and the edge of the container */
-  overflow: auto; /* Optional: Shadow for effect */
-}
-
-/* Grid container styling */
-.grid-container {
-  border: 2px solid #ccc; /* Light gray border for the container */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  background-color: #ffffff;
-  padding: 15px;
-  overflow: auto;
-}
-
 @media only screen and (max-width: 768px) {
   .main {
     display: block;
@@ -60,16 +50,18 @@ body {
 
 /* Right section styling */
 .right {
-  background-color: #997c9f62;
+  background-color: var(--right-bg);
   padding: 2rem;
   margin-top: 2vh;
-  border: #00b64c48 solid;
+  border: var(--right-border);
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
   gap: 20px;
   min-width: 200px;
   align-items: center;
+  height: 80%;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15); /* More shadow for depth */
 }
 
 /* Controls container styling */
@@ -89,43 +81,48 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Button shadow */
+}
+.control-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 .control-btn.start {
-  background-color: #00b64c;
-  color: white;
+  background-color: var(--start-btn-bg);
+  color: var(--btn-text);
 }
 
 .control-btn.finish {
-  background-color: #f50707;
-  color: white;
+  background-color: var(--finish-btn-bg);
+  color: var(--btn-text);
 }
 
 .control-btn.wall {
-  background-color: #43164d;
-  color: white;
+  background-color: var(--wall-btn-bg);
+  color: var(--btn-text);
 }
 
 .control-btn.visualize {
-  background-color: #fcee55;
-  color: rgb(38, 1, 1);
+  background-color: var(--visualize-btn-bg);
+  color: var(--btn-text);
   text-transform: capitalize;
-  
 }
 
 .control-btn.reset {
-  background-color: #120af3;
-  color: white;
+  background-color: var(--reset-btn-bg);
+  color: var(--btn-text);
 }
 
 .control-btn:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  transform: scale(1.03); /* Slight scale on hover */
 }
 
 /* Pathfinding methods styling */
 .pathfinding-methods {
-  padding-top: 5rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -136,37 +133,30 @@ body {
 .pathfinding-methods h3 {
   margin-bottom: 10px;
   text-align: center;
+  font-size: 1.2em; /* Increased size */
 }
 
 .pathfinding-methods button {
-  background-color: #000000;
-  color: white;
+  background-color: var(--method-btn-bg);
+  color: var(--btn-text);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   width: 10rem;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow for buttons */
 }
 
 .pathfinding-methods button.selected {
-  background-color: #3c3f41;
-  border: 2px solid #0077ff;
+  background-color: var(--method-btn-selected-bg);
+  border: 2px solid var(--selected-border);
 }
 
 .pathfinding-methods button:hover {
-  background-color: #a7c2df;
-  color: #360a43;
+  background-color: var(--method-btn-hover-bg);
+  color: var(--method-btn-hover-text);
+  transform: scale(1.05); /* Slight scale effect on hover */
 }
 
-.footer {
-  background-color: #4a4e69;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  font-size: 1em;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  border-top: 2px solid #ddd;
-}
