@@ -1,26 +1,61 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import styled from 'styled-components';
 import './App.css';
 import PathfindingVisualizer from './Pathfinding Visualizer/PathfindingVisualizer';
+import {GlobalTheme} from './Theme';
+import {DarkModeIcon, LightModeIcon} from './ThemeIcon';
+import {useDarkMode} from './useDarkMode';
 
 function App() {
+  const {isDarkMode, toggleTheme} = useDarkMode();
   const pathfindingVisualizerRef = useRef();
+  const gridWrapperRef = useRef();
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
+  const [isVisualizing, setIsVisualizing] = useState(false);
+  const [gridDimensions, setGridDimensions] = useState({
+    rows: 20,
+    cols: calculateColumns(),
+  }); // Default dimensions
+
+  useEffect(() => {
+    const handleResize = () => {
+      setGridDimensions(prevDimensions => ({
+        ...prevDimensions,
+        cols: calculateColumns(),
+      }));
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial call to set dimensions
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  function calculateColumns() {
+    const wrapperWidth = gridWrapperRef.current
+      ? gridWrapperRef.current.clientWidth
+      : 0;
+    const columnWidth = 30; // Width of each column
+    const columns = Math.floor(wrapperWidth / columnWidth);
+    return Math.max(10, Math.min(columns, 50)); // Ensure columns are between 10 and 50
+  }
 
   const handleStartNode = () => {
     if (pathfindingVisualizerRef.current) {
-      pathfindingVisualizerRef.current.activateStartNode();
+      pathfindingVisualizerRef.current.activateStartNode(); // Activates start node selection
     }
   };
 
   const handleFinishNode = () => {
     if (pathfindingVisualizerRef.current) {
-      pathfindingVisualizerRef.current.activateFinishNode();
+      pathfindingVisualizerRef.current.activateFinishNode(); // Activates finish node selection
     }
   };
 
   const handleWall = () => {
     if (pathfindingVisualizerRef.current) {
-      pathfindingVisualizerRef.current.activateWall();
+      pathfindingVisualizerRef.current.activateWall(); // Activates wall toggle
     }
   };
 
@@ -29,41 +64,61 @@ function App() {
       alert('Please select an algorithm before visualizing.');
       return;
     }
+    setIsVisualizing(true);
     if (pathfindingVisualizerRef.current) {
-      pathfindingVisualizerRef.current.visualizeAlgorithm();
+      pathfindingVisualizerRef.current.visualizeAlgorithm(() => {
+        setIsVisualizing(false); // Callback to set visualization state
+      });
+    }
+  };
+
+  const handleStop = () => {
+    setIsVisualizing(false);
+    if (pathfindingVisualizerRef.current) {
+      pathfindingVisualizerRef.current.stopVisualization(); // Stops visualization
     }
   };
 
   const handleReset = () => {
+    setIsVisualizing(false);
     if (pathfindingVisualizerRef.current) {
-      pathfindingVisualizerRef.current.resetGrid();
+      pathfindingVisualizerRef.current.resetGrid(); // Resets the grid
     }
   };
 
   const handleAlgorithmChange = algorithm => {
     setSelectedAlgorithm(algorithm);
     if (pathfindingVisualizerRef.current) {
-      // Ensure setAlgorithm exists
-      if (typeof pathfindingVisualizerRef.current.setAlgorithm === 'function') {
-        pathfindingVisualizerRef.current.setAlgorithm(algorithm);
-      } else {
-        console.error('setAlgorithm is not a function');
-      }
+      pathfindingVisualizerRef.current.setAlgorithm(algorithm); // Sets the algorithm
     }
   };
 
   return (
-    <>
-      <header className="title">Pathfinding Algorithm Visualization</header>
+    <GlobalTheme isDarkMode={isDarkMode}>
+      <header className="title">
+        Pathfinding Algorithm Visualization
+        <IconsContainer>
+          <ThemeIconWrapper onClick={toggleTheme}>
+            {isDarkMode ? (
+              <LightModeIcon toggleDarkMode={toggleTheme} />
+            ) : (
+              <DarkModeIcon toggleLightMode={toggleTheme} />
+            )}
+          </ThemeIconWrapper>
+        </IconsContainer>
+      </header>
       <div className="main">
-        <section className="grid-wrapper">
-          <div className="grid-container">
+        <GridWrapper ref={gridWrapperRef}>
+          <GridContainer cols={gridDimensions.cols}>
             <PathfindingVisualizer
               ref={pathfindingVisualizerRef}
+              rows={gridDimensions.rows}
+              cols={gridDimensions.cols}
               selectedAlgorithm={selectedAlgorithm}
+              isVisualizing={isVisualizing}
             />
-          </div>
-        </section>
+          </GridContainer>
+        </GridWrapper>
         <section className="right">
           <div className="controls">
             <button
@@ -89,8 +144,16 @@ function App() {
               className={`control-btn visualize ${
                 selectedAlgorithm ? 'selected' : ''
               }`}
-              onClick={handleVisualize}>
+              onClick={handleVisualize}
+              disabled={isVisualizing}>
               VISUALIZE
+            </button>
+            <button
+              type="button"
+              className="control-btn stop"
+              onClick={handleStop}
+              disabled={!isVisualizing}>
+              Stop
             </button>
             <button
               type="button"
@@ -114,12 +177,60 @@ function App() {
           </div>
         </section>
       </div>
-      <footer className="footer">
+      <Footer>
         &copy; {new Date().getFullYear()} Kanishk Teotia | All rights reserved |
         Version 1.0
-      </footer>
-    </>
+      </Footer>
+    </GlobalTheme>
   );
 }
 
 export default App;
+
+const IconsContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ThemeIconWrapper = styled.div`
+  display: inline-block;
+  cursor: pointer;
+`;
+
+const GridContainer = styled.div`
+  background-color: ${({theme}) => theme.mainColors.grey};
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  overflow: hidden;
+  max-height: 70vh;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+`;
+
+const GridWrapper = styled.div`
+  background-color: var(--grid-bg);
+  padding: 20px;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: calc(100vw - 300px);
+  max-height: 76vh;
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+`;
+
+const Footer = styled.div`
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  text-align: center;
+  padding: 15px;
+  font-size: 1em;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.9);
+`;

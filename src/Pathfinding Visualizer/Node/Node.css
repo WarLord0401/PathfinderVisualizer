@@ -4,6 +4,7 @@
   outline: 1px solid var(--primary-text);
   display: grid;
   position: relative;
+  
 }
 
 /* Start node styling */

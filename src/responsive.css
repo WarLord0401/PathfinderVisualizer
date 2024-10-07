@@ -78,4 +78,8 @@
   .pathfinding-methods button {
     font-size: 0.8em;
   }
+
+  .grid-wrapper {
+    padding: 5px;
+  }
 }
