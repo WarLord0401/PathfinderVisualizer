@@ -5,7 +5,6 @@ import {
   handleMouseDown,
   handleMouseEnter,
   handleMouseUp,
-  handleResize,
   handleStop,
 } from './components/Handlers';
 
@@ -77,10 +76,16 @@ class PathfindingVisualizer extends Component {
     });
   }
 
+  handleResize = () => {
+    const numColumns = this.calculateNumColumns();
+    const newGrid = this.createGrid(numColumns);
+    this.setState({grid: newGrid, numColumns});
+  };
+
   componentDidMount() {
     const grid = this.createGrid(this.state.numColumns);
     this.setState({grid});
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', this.handleResize.bind(this));
 
     if (this.pathfindingVisualizerRef.current) {
       this.pathfindingVisualizerRef.current.handleStop = handleStop;
@@ -88,18 +93,18 @@ class PathfindingVisualizer extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener('resize', this.handleResize.bind(this));
   }
 
   calculateNumColumns() {
     const gridWidth = window.innerWidth;
     const columnWidth = 30; // Width of each column in pixels
-    return Math.max(Math.floor(gridWidth / columnWidth), 10); // Minimum 10 columns
+    return Math.max(Math.floor(gridWidth / columnWidth), 10);
   }
 
   createGrid(numColumns) {
     const grid = [];
-    const numRows = 20; // Set the number of rows
+    const numRows = numColumns; // Set the number of rows
     for (let row = 0; row < numRows; row++) {
       const currentRow = [];
       for (let col = 0; col < numColumns; col++) {
@@ -205,9 +210,8 @@ const GridRow = styled.div`
 `;
 
 const Grid = styled.div`
-  display: grid;
-  padding: 5%;
+  display: flex;
+  justify-content: center;
   grid-template-columns: repeat(auto-fill, minmax(27px, 1fr));
   width: 100%;
-  overflow: auto;
 `;

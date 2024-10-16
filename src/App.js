@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import './App.css';
 import PathfindingVisualizer from './Pathfinding Visualizer/PathfindingVisualizer';
+import './responsive.css';
 import {GlobalTheme} from './Theme';
 import {DarkModeIcon, LightModeIcon} from './ThemeIcon';
 import {useDarkMode} from './useDarkMode';
@@ -108,8 +109,8 @@ function App() {
         </IconsContainer>
       </header>
       <div className="main">
-        <GridWrapper ref={gridWrapperRef}>
-          <GridContainer cols={gridDimensions.cols}>
+        <GridWrapper className="grid-wrapper" ref={gridWrapperRef}>
+          <GridContainer className="grid-container" cols={gridDimensions.cols}>
             <PathfindingVisualizer
               ref={pathfindingVisualizerRef}
               rows={gridDimensions.rows}
@@ -120,64 +121,70 @@ function App() {
           </GridContainer>
         </GridWrapper>
         <section className="right">
-          <div className="controls">
-            <button
-              type="button"
-              className="control-btn start"
-              onClick={handleStartNode}>
-              Start Node
-            </button>
-            <button
-              type="button"
-              className="control-btn finish"
-              onClick={handleFinishNode}>
-              Finish Node
-            </button>
-            <button
-              type="button"
-              className="control-btn wall"
-              onClick={handleWall}>
-              Build Wall
-            </button>
-            <button
-              type="button"
-              className={`control-btn visualize ${
-                selectedAlgorithm ? 'selected' : ''
-              }`}
-              onClick={handleVisualize}
-              disabled={isVisualizing}>
-              VISUALIZE
-            </button>
-            <button
-              type="button"
-              className="control-btn stop"
-              onClick={handleStop}
-              disabled={!isVisualizing}>
-              Stop
-            </button>
-            <button
-              type="button"
-              className="control-btn reset"
-              onClick={handleReset}>
-              Reset
-            </button>
-          </div>
+          <Controls className="controls">
+            <div className="input">
+              <button
+                type="button"
+                className="control-btn start"
+                onClick={handleStartNode}>
+                Start Node
+              </button>
+              <button
+                type="button"
+                className="control-btn finish"
+                onClick={handleFinishNode}>
+                Finish Node
+              </button>
+              <button
+                type="button"
+                className="control-btn wall"
+                onClick={handleWall}>
+                Build Wall
+              </button>
+            </div>
+            <div className="output">
+              <button
+                type="button"
+                className={`control-btn visualize ${
+                  selectedAlgorithm ? 'selected' : ''
+                }`}
+                onClick={handleVisualize}
+                disabled={isVisualizing}>
+                VISUALIZE
+              </button>
+              <button
+                type="button"
+                className="control-btn stop"
+                onClick={handleStop}
+                disabled={!isVisualizing}>
+                Stop
+              </button>
+              <button
+                type="button"
+                className="control-btn reset"
+                onClick={handleReset}>
+                Reset
+              </button>
+            </div>
+          </Controls>
           <div className="pathfinding-methods">
             <h3>Pathfinding Methods</h3>
-            <button
-              className={selectedAlgorithm === 'dijkstra' ? 'selected' : ''}
-              onClick={() => handleAlgorithmChange('dijkstra')}>
-              Dijkstra's Algorithm
-            </button>
-            <button
-              className={selectedAlgorithm === 'aStar' ? 'selected' : ''}
-              onClick={() => handleAlgorithmChange('aStar')}>
-              A* Algorithm
-            </button>
+            <div className="path-buttons">
+              <button
+                className={selectedAlgorithm === 'dijkstra' ? 'selected' : ''}
+                onClick={() => handleAlgorithmChange('dijkstra')}>
+                Dijkstra's Algorithm
+              </button>
+              <button
+                className={selectedAlgorithm === 'aStar' ? 'selected' : ''}
+                onClick={() => handleAlgorithmChange('aStar')}>
+                A* Algorithm
+              </button>
+            </div>
           </div>
         </section>
       </div>
-      <Footer>
+      <Footer className="footer">
         &copy; {new Date().getFullYear()} Kanishk Teotia | All rights reserved |
         Version 1.0
       </Footer>
@@ -197,27 +204,31 @@ const ThemeIconWrapper = styled.div`
   cursor: pointer;
 `;
 
+const Controls = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+
 const GridContainer = styled.div`
   background-color: ${({theme}) => theme.mainColors.grey};
   border: 2px solid #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 15px;
   overflow: hidden;
   max-height: 70vh;
   display: flex;
-  flex-direction:row;
-  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
 `;
 
 const GridWrapper = styled.div`
   background-color: var(--grid-bg);
   padding: 20px;
-  overflow: hidden;
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   max-width: calc(100vw - 300px);
   max-height: 76vh;
+
   @media (max-width: 768px) {
     max-width: 100%;
   }

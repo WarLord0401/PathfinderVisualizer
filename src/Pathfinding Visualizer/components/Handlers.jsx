@@ -18,14 +18,6 @@ const handleStop = animationTimeouts => {
   }
 };
 
-// Handler to resize the grid
-const handleResize = (setState, calculateNumColumns, createGrid) => {
-  const numColumns = calculateNumColumns();
-  setState(prevState => ({
-    numColumns,
-    grid: createGrid(numColumns),
-  }));
-};
 
 // Handler for mouse down event
 const handleMouseDown = (row, col, state, setState) => {
@@ -72,6 +64,5 @@ export {
   handleMouseDown,
   handleMouseEnter,
   handleMouseUp,
-  handleResize,
   handleStop,
 };

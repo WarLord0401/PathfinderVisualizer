@@ -4,19 +4,20 @@
   outline: 1px solid var(--primary-text);
   display: grid;
   position: relative;
-  
 }
 
 /* Start node styling */
 .node-start {
   background-color: green;
-  z-index: 2; /* Ensure start node is above other nodes */
+  z-index: 2;
+  animation: none;
 }
 
 /* Finish node styling */
 .node-finish {
   background-color: red;
-  z-index: 2; /* Ensure finish node is above other nodes */
+  z-index: 2;
+  animation: none;
 }
 
 /* Visited node animation */

@@ -4,82 +4,62 @@
 }
 
 @media (max-width: 768px) {
-  /* Tablet and mobile */
   .main {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-  }
-
-  .grid-wrapper {
-    margin: 0;
-    padding: 10px;
-    width: 100%;
-    order: 1; /* Ensure the grid is positioned above the functionality buttons */
-  }
-
-  .grid-container {
-    width: 100%;
-    padding: 10px;
-    box-shadow: none;
+    align-items: center;
   }
 
   .right {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    order: 2; /* Place functionality buttons below the grid */
+    width: 100%;
+    justify-content: center;
   }
 
   .controls {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 5px;
-  }
-
-  .pathfinding-methods {
     width: 100%;
-    margin-top: 10px;
-    order: 3; /* Ensure pathfinding methods are below the functionality buttons */
+    flex-direction: row;
   }
 
-  .pathfinding-methods button {
+  .path-buttons {
+    flex-direction: row;
     width: 100%;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 5px;
+    gap: 5px;
+    justify-content: center;
   }
 
-  .control-btn {
+  .input {
+    white-space: nowrap;
     width: 100%;
-    padding: 15px;
-    font-size: 0.9em;
   }
-
-  .footer {
-    position: relative;
-    padding: 10px;
-    font-size: 0.8em;
+  .output {
+    white-space: nowrap;
+    width: 100%;
+  }
+}
+@media (max-width: 472px) {
+  .path-buttons {
+    white-space: wrap;
+    justify-content: center;
+    flex: 1 1;
   }
 }
 
-@media (max-width: 480px) {
-  /* Mobile */
-  .control-btn {
-    padding: 12px;
-    font-size: 0.8em;
+@media (max-width: 376px) {
+  .controls {
+    gap: 5px;
+    width: 100%;
+    flex-direction: column;
   }
 
-  .pathfinding-methods button {
-    font-size: 0.8em;
-  }
-
-  .grid-wrapper {
-    padding: 5px;
+  .path-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    justify-content: center;
+    flex: 1 1;
   }
 }

@@ -38,13 +38,6 @@ body {
   flex: 1;
 }
 
-@media only screen and (max-width: 768px) {
-  .main {
-    display: block;
-    flex-direction: column;
-  }
-}
-
 /* Right section styling */
 .right {
   background-color: var(--right-bg);
@@ -56,18 +49,25 @@ body {
   flex-direction: column;
   gap: 20px;
   min-width: 200px;
-  align-items: center;
   height: 80%;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15); /* More shadow for depth */
 }
 
-/* Controls container styling */
 .controls {
+  flex-direction: column;
+}
+
+.input {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-width: 150px;
-  align-items: center;
+  gap: 5px;
+  margin-bottom: 5%;
+}
+
+.output {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 /* Button styling */
@@ -117,7 +117,6 @@ body {
   transform: scale(1.03); /* Slight scale on hover */
 }
 
-/* Pathfinding methods styling */
 .pathfinding-methods {
   padding-top: 1rem;
   display: flex;
@@ -133,10 +132,20 @@ body {
   font-size: 1.2em; /* Increased size */
 }
 
+.path-buttons {
+  display: flex;
+  flex-direction: column; /* Change to row for horizontal alignment */
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  width: 100%; /* Full width */
+}
+
 .pathfinding-methods button {
+  padding: 5px;
   background-color: var(--method-btn-bg);
   color: var(--btn-text);
   border: none;
+  width: 100%;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
@@ -144,6 +153,8 @@ body {
   width: 10rem;
   transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow for buttons */
+  flex: 1; /* Allow buttons to take equal space */
+  min-width: 120px; /* Minimum width for buttons */
 }
 
 .pathfinding-methods button.selected {
